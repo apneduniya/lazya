@@ -2,7 +2,7 @@
 
 # Install packages from package.json
 echo "Installing packages from package.json..."
-bun install
+npm install
 
 # Copy env backup to .env.local file
 if [ -f ".env.local.example" ]; then
@@ -17,4 +17,4 @@ fi
 echo "Please fill in the .env.local file with the necessary environment variables."
 
 echo "Setup completed successfully!"
-echo "Now just run "bun run dev" to start the development server."
+echo "Now just run "npm run dev" to start the development server."
