@@ -40,7 +40,7 @@ Currently we support **Github, Gmail, Youtube, Google Docs** and **Google Calend
 You should have
 
 - Node v20.16.0 or higher
-- COMPOSIO API KEY
+- [COMPOSIO API KEY](https://docs.composio.dev/patterns/howtos/get_api_key)
 
 ## 👣 Steps to Run
 **Navigate to the Project Directory:**
