@@ -24,7 +24,8 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import ReactMarkdown from 'react-markdown';
 
 
 export default function Home() {
@@ -33,6 +34,7 @@ export default function Home() {
     const [response, setResponse] = useState("");
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const [renderResponse, setRenderResponse] = useState([]);
 
     const randomEntityId = () => {
         return `lazyA-${Math.random().toString(32).substring(2, 34)}`;
@@ -56,15 +58,45 @@ export default function Home() {
         }
     }, [response]);
 
+    useEffect(() => {
+        // Function to ensure that we remove the colon (:) if the response starts with it
+        const removeColonIfPresent = (response) => {
+            // Trim any extra whitespace for consistency
+            const trimmedResponse = response.trim();
+
+            // If it starts with ': ', remove ':' and any leading space
+            if (trimmedResponse.startsWith(':')) {
+                return trimmedResponse.substring(1).trim(); // Removes ':' and leading spaces
+            }
+
+            // If it doesn't start with ':', return the response as-is
+            return trimmedResponse;
+        };
+
+        // Adjust the response by removing the leading colon (if present)
+        const adjustedResponse = removeColonIfPresent(response);
+
+        // Split the response on '\n' and map over each line to render it as markdown
+        const parsedResponse = adjustedResponse.split('\n').map((line, index) => (
+            <ReactMarkdown key={index}>{line}</ReactMarkdown>
+        ));
+
+        // Update the state with the parsed response
+        setRenderResponse(parsedResponse);
+    }, [response]); // This effect will re-run whenever 'response' changes
+
     return (
         <>
             <div className="h-full w-full">
+                {/* Dialog for Response */}
                 <Dialog open={open} onOpenChange={setOpen}>
-                    <DialogContent>
+                    <DialogContent className="!max-w-4xl">
                         <DialogHeader>
                             <DialogTitle>Response</DialogTitle>
                             <DialogDescription>
-                                {response}
+                                <div className="mt-5">
+                                    {renderResponse}
+                                </div>
                             </DialogDescription>
                         </DialogHeader>
                     </DialogContent>
@@ -89,7 +121,7 @@ export default function Home() {
                                         <RocketIcon className="h-4 w-4" />
                                         <AlertTitle>Loading</AlertTitle>
                                         <AlertDescription>
-                                            Just wait for few seconds, we are working on it ;)
+                                            Just wait for few seconds, we are working on it 😉
                                         </AlertDescription>
                                     </Alert>
                                 )
@@ -99,10 +131,10 @@ export default function Home() {
                                 <FlipWords words={words} />
                             </div>
                             <h2 className="text-balance text-center text-sm text-gray-400">Generate agents, ask questions, and much more.</h2>
-                            <InputWithButton setResponse={setResponse} setLoading={setLoading} />
+                            <InputWithButton setResponse={setResponse} setLoading={setLoading} setOpen={setOpen} />
                             <div className="mt-4 flex gap-2 flex-wrap">
                                 <PromptSuggestionButton text="Star GaiaNet-AI/gaianet-node repository in GitHub" />
-                                <PromptSuggestionButton text="I have a meeting with Gaia team at 5PM today" />
+                                <PromptSuggestionButton text="Create a document in Google Docs, named lazyA and write GaiaNet is best ;)" />
                                 <PromptSuggestionButton text="Send mail to jhon@example.com that I won the hackathon" />
                             </div>
                         </div>

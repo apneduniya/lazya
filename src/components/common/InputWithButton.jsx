@@ -14,9 +14,10 @@ import {
 import { useEffect, useState } from "react";
 
 
-export function InputWithButton({ setResponse, setLoading }) {
+export function InputWithButton({ setResponse, setLoading, setOpen }) {
     const [app, setApp] = useState("github");
     const [instruction, setInstruction] = useState("");
+    const [entityId, setEntityId] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,12 +29,13 @@ export function InputWithButton({ setResponse, setLoading }) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ instruction: instruction, app: app }),
+            body: JSON.stringify({ instruction: instruction, app: app, entityId: entityId }),
         })
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
 
+                setOpen(true);
                 setResponse(data.response);
             })
             .catch((error) => {
@@ -42,6 +44,10 @@ export function InputWithButton({ setResponse, setLoading }) {
 
         setLoading(false);
     }
+
+    useEffect(() => {
+        setEntityId(localStorage.getItem("entityId"));
+    }, []);
 
     return (
         <div className="flex w-full max-w-xl items-center space-x-4 my-5">

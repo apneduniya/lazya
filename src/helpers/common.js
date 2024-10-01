@@ -16,3 +16,10 @@ export function parseJsonGarbage(s) {
         throw e;
     }
 }
+
+export function extractSlugs(url) {
+    // Split the URL by '/' and filter out empty parts (in case of leading/trailing slashes)
+    const slugs = url.split('/').filter(Boolean);
+    return slugs;
+}
+

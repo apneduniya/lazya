@@ -1,11 +1,11 @@
 import { parseJsonGarbage } from "@/helpers/common";
 import { executeAction, getActionViaUseCase, getInputSchema } from "@/utils/agent";
 import { singleMessageLLM } from "@/utils/llm";
-import { NextApiRequest, NextApiResponse } from 'next';
+import { OpenAIToolSet } from "composio-core";
 import { NextResponse } from "next/server";
 
 
-async function runAgent(instruction, app, entityId = "default") {
+async function runAgent(instruction, app, entityId) {
     const actionName = await getActionViaUseCase(app, instruction);
     const inputSchema = await getInputSchema(actionName);
     // console.log(actionName, inputSchema);
@@ -48,7 +48,7 @@ async function runAgent(instruction, app, entityId = "default") {
 
         USER'S MESSAGE(this has been done): ${instruction}
 
-        Now, write a simple, formal, precise, insightful and human like manner response (better in paragraph) to give in return for the user's message taking help from the output of the action (try to give useful data).
+        Now, write a simple, formal, precise, insightful and human like manner response (better in paragraph) to give in return for the user's message taking help from the output of the action (try to give useful data). You can use markdown and \n to format the response. Use underline for links.
 
         YOUR RESPONSE:
         `
@@ -58,15 +58,44 @@ async function runAgent(instruction, app, entityId = "default") {
     }
 }
 
+async function userConnectionExists(entityId, app) {
+    const toolset = new OpenAIToolSet({
+        apiKey: process.env.NEXT_PUBLIC_COMPOSIO_API_KEY,
+    });
+
+    const entity = toolset.client.getEntity(entityId);
+    const connection = await entity.getConnection(app);
+    if (!connection) {
+        return false;
+    }
+
+    return true;
+}
+
 
 export async function POST(request) {
-    const body = await request.json();
-    const { instruction, app } = body;
-    const response = await runAgent(instruction, app);
+    try {
+        const body = await request.json();
+        const { instruction, app, entityId } = body;
 
-    return NextResponse.json({
-        response: response,
-    }, { status: 200 });
+        const isConnected = await userConnectionExists(entityId, app);
+        if (!isConnected) {
+            return NextResponse.json({
+                response: `You have not connected ${app} app. Please connect it first.`,
+            }, { status: 200 });
+        }
+
+        const response = await runAgent(instruction, app, entityId);
+
+        return NextResponse.json({
+            response: response,
+        }, { status: 200 });
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({
+            response: "Something went wrong. Please contact the developer (@thatsmeadarsh). He will surely help you 😊.",
+        }, { status: 500 });
+    }
 }
 
 

@@ -20,7 +20,7 @@ export async function getActionViaUseCase(app, useCase) {
 }
 
 
-export async function getInputSchema(actionName) {
+export async function getInputSchema(actionName) { 
     const options = { method: 'GET', headers: { 'X-API-Key': process.env.NEXT_PUBLIC_COMPOSIO_API_KEY } };
 
     try {
@@ -49,6 +49,7 @@ export async function executeAction(entityId, actionName, params) {
     const action = await toolset.executeAction(
         actionName,
         params,
+        entityId
     );
 
     return action;
