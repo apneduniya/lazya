@@ -22,7 +22,7 @@
 </details>
 
 ## 🎥 DEMO
-[![demo video](https://cdn.loom.com/sessions/thumbnails/f7cded69452940febdef5de0c7bb038b-c7bbe3ea58995819-full-play.gif)](https://www.loom.com/embed/f7cded69452940febdef5de0c7bb038b?sid=7c87706d-3c28-4c9b-96a8-40fdcdb1d29b)
+[![demo video](https://cdn.loom.com/sessions/thumbnails/f7cded69452940febdef5de0c7bb038b-c7bbe3ea58995819-full-play.gif)](https://www.loom.com/share/f7cded69452940febdef5de0c7bb038b?sid=d9f04d11-f69b-440a-b7fa-00fe37a8bc28)
 
 ## 📙 Features
 Currently we support **Github, Gmail, Youtube, Google Docs** and **Google Calendar**. If you give good prompts it can interact with that app as you wish, like:
