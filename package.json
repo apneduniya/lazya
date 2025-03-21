@@ -16,7 +16,7 @@
     "@radix-ui/react-toast": "^1.2.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "composio-core": "^0.1.1-8.1",
+    "composio-core": "^0.1.18",
     "framer-motion": "^11.7.0",
     "mini-svg-data-uri": "^1.4.4",
     "next": "14.2.13",

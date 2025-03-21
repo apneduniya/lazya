@@ -8,7 +8,9 @@ async function userConnectionExists(entityId, app) {
     });
 
     const entity = await toolset.client.getEntity(entityId);
-    const connection = await entity.getConnection(app);
+    const connection = await entity.getConnection({
+        appName: app
+    });
     if (!connection) {
         return false;
     }

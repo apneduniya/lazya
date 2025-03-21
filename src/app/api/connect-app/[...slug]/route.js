@@ -7,17 +7,25 @@ async function setupUserConnectionIfNotExists(entityId, app) {
         apiKey: process.env.COMPOSIO_API_KEY,
     });
 
-    const entity = await toolset.client.getEntity(entityId);
-    const connection = await entity.getConnection(app);
-    if (!connection) {
-        const connection = await entity.initiateConnection(app);
+    const entity = toolset.client.getEntity(entityId);
+    let connection;
+
+    try {
+        connection = await entity.getConnection({ appName: app });
+        if (!connection) {
+            throw Error("No existing connection found.")
+        } else {
+            return false;
+        }
+    } catch (error) {
+        // Connection doesn't exist, create a new one
+        console.log("No existing connection found, creating a new one...");
+        connection = await entity.initiateConnection({ appName: app });
         // console.log("Log in via: ", connection.redirectUrl);
         // return connection.waitUntilActive(60);
 
-        return connection.redirectUrl;
+        return connection.redirectUrl; // returning redirectLink
     }
-
-    return false;
 }
 
 function extractSpecificSlugs(url) {
