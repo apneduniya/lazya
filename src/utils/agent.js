@@ -4,7 +4,7 @@ import { OpenAIToolSet } from "composio-core";
 
 export async function getActionViaUseCase(app, useCase) {
 
-    const options = { method: 'GET', headers: { 'X-API-Key': process.env.NEXT_PUBLIC_COMPOSIO_API_KEY } };
+    const options = { method: 'GET', headers: { 'X-API-Key': process.env.COMPOSIO_API_KEY } };
 
     try {
         const response = await fetch(`https://backend.composio.dev/api/v2/actions?useCase=${useCase}&apps=${app}`, options);
@@ -21,7 +21,7 @@ export async function getActionViaUseCase(app, useCase) {
 
 
 export async function getInputSchema(actionName) { 
-    const options = { method: 'GET', headers: { 'X-API-Key': process.env.NEXT_PUBLIC_COMPOSIO_API_KEY } };
+    const options = { method: 'GET', headers: { 'X-API-Key': process.env.COMPOSIO_API_KEY } };
 
     try {
         const response = await fetch(`https://backend.composio.dev/api/v1/actions/${actionName}`, options);
@@ -42,7 +42,7 @@ export async function getInputSchema(actionName) {
 
 export async function executeAction(entityId, actionName, params) {
     const toolset = new OpenAIToolSet({
-        apiKey: process.env.NEXT_PUBLIC_COMPOSIO_API_KEY,
+        apiKey: process.env.COMPOSIO_API_KEY,
         entityId: entityId,
     });
 
@@ -68,7 +68,7 @@ export async function executeAction(entityId, actionName, params) {
 //     });
 
 //     const composio_toolset = new OpenAIToolSet({
-//         apiKey: process.env.NEXT_PUBLIC_COMPOSIO_API_KEY,
+//         apiKey: process.env.COMPOSIO_API_KEY,
 //         entityId: entityId,
 //     });
 

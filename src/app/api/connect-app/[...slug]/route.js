@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 async function setupUserConnectionIfNotExists(entityId, app) {
     const toolset = new OpenAIToolSet({
-        apiKey: process.env.NEXT_PUBLIC_COMPOSIO_API_KEY,
+        apiKey: process.env.COMPOSIO_API_KEY,
     });
 
     const entity = await toolset.client.getEntity(entityId);

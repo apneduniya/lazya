@@ -60,7 +60,7 @@ async function runAgent(instruction, app, entityId) {
 
 async function userConnectionExists(entityId, app) {
     const toolset = new OpenAIToolSet({
-        apiKey: process.env.NEXT_PUBLIC_COMPOSIO_API_KEY,
+        apiKey: process.env.COMPOSIO_API_KEY,
     });
 
     const entity = toolset.client.getEntity(entityId);

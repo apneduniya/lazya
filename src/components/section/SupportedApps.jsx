@@ -89,12 +89,11 @@ const cards = [
         title: "Gmail",
         src: "https://raw.githubusercontent.com/SamparkAI/open-logos/d9b539471e551d6c14ffd442d172e476edd44b33/gmail.svg",
     },
-
     {
         id: "youtube",
         description: "Youtube actions to interact with youtube app",
         title: "Youtube",
-        src: "https://banner2.cleanpng.com/20190126/ixu/kisspng-youtube-portable-network-graphics-logo-image-compu-5c4bf8b8ef3b19.2833872615484827449799.jpg",
+        src: "https://img.freepik.com/premium-vector/red-youtube-logo-social-media-logo_197792-1803.jpg",
     },
     {
         id: "googledocs",
